@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %} Game Page {% endblock %}
+{% block content %}
+    <h1>Welcome to the Boggle Game Page</h1>
+
+    <button id="startbutton">Start a new round</button>
+
+    <form id="guessform" action="/check" method="POST">
+        <input type="text" id="guessforminput" placeholder="type a guess here" name="guess">
+        <button id="guessbutton">Submit guess!</button>
+    </form>
+
+    <ul id="messagecontainer"></ul>
+    <ul id="scorecontainer"></ul>
+    <ul id="timercontainer"></ul>
+    
+    <h3>This is the board generated from the route using a loop and table elements</h3>
+
+    <table id="boggleboard" class="board">
+    <tbody>
+        {%for row in board%}
+        <tr>{%for cell in row%}
+        <td>{{cell}}</td>
+        {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+
+
+
+
+
+
+
+    <h3>This is the board generated from the route</h3>
+    <div> {{board[0]}} </div> 
+    <div> {{board[1]}} </div>
+    <div> {{board[2]}} </div>
+    <div> {{board[3]}} </div>
+    <div> {{board[4]}} </div>
+
+    <h3>This is a board generated from a jinja loop using the route</h3>
+    {% for row in board %}
+    <div>{{row}}</div>
+    {%endfor%}
+
+    <h3>This is the board generated from the session</h3>
+    <div> {{session["current_board"][0]}} </div> 
+    <div> {{session["current_board"][1]}} </div>
+    <div> {{session["current_board"][2]}} </div>
+    <div> {{session["current_board"][3]}} </div>
+    <div> {{session["current_board"][4]}} </div>
+
+    <h3>This is a board generated from a jinja loop using the session</h3>
+    {% for row in session ["current_board"] %}
+    <div>{{row}}</div>
+    {%endfor%}
+
+    
+
+
+
+    <p>Thanks for browsing!</p>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+{%endblock%}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/app.css">
+    <title> {% block title %}{% endblock %}</title>
+</head>
+<body>
+    
+    <nav class="navbar">
+    <a href="/">Root</a>
+    <a href="/home">Home</a>
+    <a href="/check">Check guess route</a>
+    </nav>
+
+</section>
+   <main id="content"> {%block content%}{% endblock %} </main>
+    {% with messages= get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <section class="messages">
+    {% for category,msg in messages %}
+    <p class="{{category}}">{{category}} {{msg}}</p>
+    {% endfor %}
+    </section>
+    {%endif%}
+    {%endwith%}
+    <footer>pretend i am a footer!</footer>
+    <div class="tenor-gif-embed" data-postid="15302742" data-share-method="host" data-aspect-ratio="1.84971" data-width="25%"><a href="https://tenor.com/view/mel-gibson-give-me-back-my-son-shouting-mad-gif-15302742">Mel Gibson Give Me Back My Son GIF</a>from <a href="https://tenor.com/search/mel+gibson-gifs">Mel Gibson GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+<script src="/static/app.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios/dist/axios.js"></script>
+</body>
+</html>
