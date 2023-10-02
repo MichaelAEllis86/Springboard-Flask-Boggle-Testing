@@ -6,29 +6,29 @@
 //TODO ADD a check that an existing word has not already been used
 // Done
 
-
-
+// DOM Elements jQuery
 const $guessForm=$('#guessform')
 const $guessFormInput=$('#guessforminput')
 const $guessbutton=$("#guessbutton")
-
 const $ulMessageContainer=$("#messagecontainer")
 const $ulScoreContainer=$('#scorecontainer')
 const $liMessages=$(".message")
-
 const $startButton=$("#startbutton")
 const $timerContainer=$('#timercontainer')
+const $highScoreContainer=$("#highscorecontainer")
+const $numPlaysContainer=$("#numplayscontainer")
 
-
-//event listener to get form to grab input value
-
+//Score global Var
 let score=0
 
-const guessedWords=[]
+//var holding valid guesses, we check this array to see if a word has been guessed previously via checkGuess()
+let guessedWords=[]
 
+//intervalID Var using to clear setinterval used by runTimer()
 let intervalID;
 
-let seconds=10
+//Seconds global Var tracks game timer, counts down from 60 seconds
+let seconds=60
 
 //Displays the timer in DOM
 function showTimer(){
@@ -45,43 +45,56 @@ async function tickVersion2(){
         gameOver()
     }
 }
-//Runs all associated game timers and dom events as a package with tickV2,showTimer,and 
+//Runs all associated game timers and dom events as a package with tickV2 & showTimer
 function runTimer(){
     intervalID=setInterval(tickVersion2,1000)
 }
 
 //handles gameOver DOM Events
-function gameOver(){
+async function gameOver(){
     $guessForm.remove()
     $timerContainer.empty()
+    $highScoreContainer.empty()
+    $numPlaysContainer.empty()
     $ulMessageContainer.append("<li class='invalidmessage'>Game Over! You're Amazing! </li>")
-    
-}
+    sendPlayerData()
 
+}
+//handles DOM display of valid word feedback
 function displayValidWordMessage(pointValue){
     $ulMessageContainer.empty()
     $ulMessageContainer.append(`<li class="validmessage">your word is valid and is worth ${pointValue} points </li>`)
 }
-
+//handles DOM display of duplicate word feedback
 function displayDuplicateWordMessage(){
     $ulMessageContainer.empty()
     $ulMessageContainer.append('<li class="invalidmessage">your word has already been used}</li>')
 }
-
+//handles DOM display of invalid word feedback
 function displayInvalidWordMessage(result){
     $ulMessageContainer.empty()
     $ulMessageContainer.append(`<li class="invalidmessage">your message is invalid error= ${result}</li>`)
 }
-
+//Displays current score of the user in the DOM
 function displayScore(){
     $ulScoreContainer.empty()
     $ulScoreContainer.append(`<li id="score">Current Score:${score}</li>`)
 }
 
+function displayHighScore(highscore){
+    $highScoreContainer.empty()
+    $highScoreContainer.append(`<li id="score">The user's highscore is :${highscore}</li>`)
+
+}function displayNumPlays(gamesPlayed){
+    $numPlaysContainer.empty()
+    $numPlaysContainer.append(`<li id="score">the user's games played is :${gamesPlayed}</li>`)
+}
+
+//Event listener attached to the guessform, submit triggers run of the whole checkGuess() engine sending words to server for validation
 $('#guessform').on('submit',function (evt){
     evt.preventDefault();
     const word=$('#guessforminput').val()
-    console.log('clicked',"the evt listener is working", "inside evt listener")
+    console.log('clicked',"the evt listener is working", "inside guessform evt listener")
     console.log(".....................................")
     console.log("this is what word the form will send....",`the word is... ${word}`)
     $guessFormInput.val("")
@@ -90,28 +103,22 @@ $('#guessform').on('submit',function (evt){
     console.log(checkGuess(word)) 
 })
 
+//Event lister attached to startbutton, click starts game and runs game timer and removes the button
 $startButton.on("click", function(evt){
     evt.preventDefault();
-    console.log('clicked',"the evt listener is working", "inside evt listener")
+    console.log('clicked',"the evt listener is working", "inside the Start evt listener")
+    score=0
+    guessedWords=[]
     runTimer()
+    displayScore()
     $startButton.remove()
 })
 
-
+//taking word from form, sends to server which validates guess, receives response and appends to dom as user feedback on a given guess
 async function checkGuess(word){
     //getting the response from the server
     const response= await axios.get("/check", {params: {"word":word}})
-    // console.log("you are now inside of checkGuess")
-    // console.log(".....................................")
-    // console.log("printing the response...", response)
-    // console.log(".....................................")
-    // console.log("printing response.data...", response.data)
-    // console.log(".....................................")
     const result=response.data.result
-    // console.log("printing response.data.result...",response.data.result)
-    // console.log(".....................................")
-    // console.log("printing result variable...",result)
-    //using the response to dictate score and validity
     const pointValue=word.length
     if(result==="ok" && guessedWords.indexOf(word)===-1){
         score+=pointValue
@@ -134,7 +141,7 @@ async function checkGuess(word){
     }
     else{
         console.log("duplicate word")
-        return
+        return displayDuplicateWordMessage
     }
 
 }
@@ -142,6 +149,10 @@ async function checkGuess(word){
 async function sendPlayerData(){
     const response=await axios.post('/playerdata',{score:`${score}`})
     console.log(response)
+    highscore=response.data.highscore
+    gamesPlayed=response.data.games_played
+    // displayHighScore(highscore)
+    // displayNumPlays(gamesPlayed)
     if (response.data.brokeRecord){
         $ulScoreContainer.append(`<li id="record">Current Score:${score} is the new highscore</li>`)
     }

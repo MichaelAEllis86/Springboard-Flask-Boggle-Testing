@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %} Game Page {% endblock %}
+{% block content %}
+    
+    <h1 id="highscorewelcome">Welcome to the Highscore Page</h1>
+
+    <h3>The player's current highscore is {{ session['highscore']}}</h3>
+    <h3>The player has played {{session['games-played']}} games </h3>
+
+
+    <p>Thanks for browsing!</p>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+{%endblock%}

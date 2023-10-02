@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block title %} Game Page {% endblock %}
 {% block content %}
-    <h1>Welcome to the Boggle Game Page</h1>
+    
+    <h1 id="gamepagewelcome">Welcome to the Game Page</h1>
+    
 
-    <button id="startbutton">Start a new round</button>
+    <button id="startbutton">Start New Game</button>
 
     <form id="guessform" action="/check" method="POST">
         <input type="text" id="guessforminput" placeholder="type a guess here" name="guess">
@@ -13,8 +15,10 @@
     <ul id="messagecontainer"></ul>
     <ul id="scorecontainer"></ul>
     <ul id="timercontainer"></ul>
+    <ul id="highscorecontainer"></ul>
+    <ul id="numplayscontainer"></ul>
     
-    <h3>This is the board generated from the route using a loop and table elements</h3>
+    <!-- <h3>This is the board generated from the route using a loop and table elements</h3> -->
 
     <table id="boggleboard" class="board">
     <tbody>
@@ -27,14 +31,8 @@
     </tbody>
     </table>
 
-
-
-
-
-
-
-
-    <h3>This is the board generated from the route</h3>
+    <!-- a few other ways to generate the board via jinja -->
+    <!-- <h3>This is the board generated from the route</h3>
     <div> {{board[0]}} </div> 
     <div> {{board[1]}} </div>
     <div> {{board[2]}} </div>
@@ -56,7 +54,7 @@
     <h3>This is a board generated from a jinja loop using the session</h3>
     {% for row in session ["current_board"] %}
     <div>{{row}}</div>
-    {%endfor%}
+    {%endfor%} -->
 
     
 

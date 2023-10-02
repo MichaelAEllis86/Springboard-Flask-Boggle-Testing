@@ -1,13 +1,39 @@
-h1{
+#gamepagewelcome{
     color:rgb(3,161,252);
     font-family: Arial, Helvetica, sans-serif;
-    outline: 50px;
+    text-align:justify;
 }
 
+#highscorewelcome{
+    color:rgb(3,161,252);
+    font-family: Arial, Helvetica, sans-serif;
+    text-align:justify;
+}
+
+#guessform input:hover{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color:rgb(184, 224, 247)
+}
+
+#basewelcome{
+    text-align:justify;
+    margin: 1.2em;
+    color:rgb(3,161,252);
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
 body{
     background-color: white;
     padding: 0;
     margin: 0;
+}
+
+#scorecontainer{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#timercontainer{
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .navbar{
@@ -42,12 +68,18 @@ body{
     border: 2px solid red;
     color: red;
     font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    padding: 5px;
+    width: 325px;
 }
 
 .validmessage{
     border: 2px solid green;
     color: green;
     font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    padding: 5px;
+    width: 325px;
 }
 
 td{
@@ -60,8 +92,31 @@ td{
     color:black ;
     font-family: Arial, Helvetica, sans-serif                                       
   }
-  
 
+button{
+    box-sizing: border-box;
+    margin: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color:rgb(3,161,252);
+    border-width: 2px;
+    border-style: solid;
+    border-radius:5px ;
+
+  }
+
+button:hover{
+    background-color: aqua;
+}
+
+h3{
+    color:rgb(3,161,252);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+p{
+    color:rgb(3,161,252);
+    font-family: Arial, Helvetica, sans-serif
+}
 /* tr{
     height: 2em;
     width: 2em;
